@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+  </head>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@300;900&display=swap");
+    * {
+      font-family: "Merriweather", serif;
+    }
+    .postDiv {
+      border: 1px solid black;
+      border-radius: 30px;
+      text-align: center;
+      margin-bottom: 2em;
+    }
+  </style>
+  <body>
+    <h1>Pages</h1>
+    <div class="posts__wrapper" id="postWrapper"></div>
+
+    <script>
+      const postWrapper = document.getElementById("postWrapper");
+
+      fetch("http://localhost:3000/api/getposts")
+        .then((response) => response.json())
+        .then((posts) => {
+          const postsArray = posts.allPosts;
+          postsArray.forEach((post) => {
+            const postTitle = post.Title;
+            const postOverview = post.Overview;
+            const postCreator = post.Creator;
+            wrapPostUnderPostsWrapper(postTitle, postOverview, postCreator);
+            /* postWrapper.innerHTML = `<div class="card" style="width: 18rem;"><img src="..." class="card-img-top" alt="..."><div class="card-body"><h5 class="card-title">Card title</h5><p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p><a href="#" class="btn btn-primary">Go somewhere</a></div></div>`; */
+          });
+        });
+
+      function wrapPostUnderPostsWrapper(title, overview, creator) {
+        const postDiv = document.createElement("div");
+        postDiv.classList.add("postDiv");
+        const postTitle = document.createElement("h1");
+        postTitle.innerText = title;
+
+        const postOverview = document.createElement("h2");
+        postOverview.innerText = overview;
+
+        const postCreator = document.createElement("h3");
+        postCreator.innerText = creator;
+
+        postDiv.appendChild(postTitle);
+        postDiv.appendChild(postOverview);
+        postDiv.appendChild(postCreator);
+
+        postWrapper.appendChild(postDiv);
+      }
+    </script>
+  </body>
+</html>

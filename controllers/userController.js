@@ -31,11 +31,17 @@ exports.login = async (req, res) => {
             } else {
               res.status(200).json({ success: true, user })
             }
-          }
-        
+          }        
       } catch (error) {
-        res.status(400).json({ success: false, error: error.message })
-        
+        res.status(400).json({ success: false, error: error.message })      
       }
     }
+}
+
+
+exports.followUser = async (req, res) => {
+  const { follower, followerUsername, username } = req.body;
+  if (!follower || !followerUsername || !username) {
+    res.status(400).json({ success: false, error: "Send all details"})
+  }
 }
